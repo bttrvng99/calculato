@@ -52,8 +52,25 @@ function App() {
   };
 
   const backspace = () => {
-    if(viewResult.length > 1) setViewResult(viewResult.slice(0, viewResult.length - 1));
-    else setViewResult('0');
+    if (viewResult.length > 1)
+      setViewResult(viewResult.slice(0, viewResult.length - 1));
+    else setViewResult("0");
+  };
+
+  const clear = (input) => {
+    switch (input) {
+      case "C":
+        setOriginalNumber(0);
+        insertedNumber = 0;
+        setInputExpression("");
+        setViewResult("0");
+        break;
+      case "CE":
+        setViewResult("0");
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -68,24 +85,10 @@ function App() {
         </div>
         <div className="numpad">
           <button className="numpad--percentage">%</button>
-          <button
-            className="numpad--clearEntry"
-            onClick={() => {
-              setViewResult("0");
-            }}
-          >
+          <button className="numpad--clearEntry" onClick={() => clear("CE")}>
             CE
           </button>
-          <button
-            className="numpad--clear"
-            onClick={() => {
-              setOriginalNumber(0);
-              insertedNumber = 0;
-              // viewResult = "0";
-              setInputExpression('');
-              setViewResult("0");
-            }}
-          >
+          <button className="numpad--clear" onClick={() => clear("C")}>
             C
           </button>
           <button className="numpad--backspace" onClick={() => backspace()}>
