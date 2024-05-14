@@ -41,15 +41,15 @@ function App() {
     insertedNumber = Number(viewResult);
     if (inputExpression.length === 0 || originalNumber === 0) {
       setViewResult(insertedNumber);
-      // setViewResult("0");
     } else {
-      setViewResult(
-        calculate(inputExpression, originalNumber, insertedNumber)
-      );
-      // setViewResult("0");
+      setViewResult(calculate(inputExpression, originalNumber, insertedNumber));
     }
+    var ogNumber = originalNumber;
+    var ogExpression = inputExpression;
+    var ogNumber2 = insertedNumber;
     setInputExpression("");
     setOriginalNumber("0");
+    setEquation(ogNumber + " " + ogExpression + " " + ogNumber2 + " =");
     final = true;
   };
 
@@ -65,6 +65,7 @@ function App() {
         setOriginalNumber(0);
         insertedNumber = 0;
         setInputExpression("");
+        setEquation("")
         setViewResult("0");
         break;
       case "CE":
@@ -80,7 +81,7 @@ function App() {
       <main>
         <div className="screen">
           <div className="screen--original">
-            {originalNumber}
+            {final && inputExpression === "" ? fullEquation : originalNumber}
             {inputExpression}
           </div>
           <div className="screen--inserted">{viewResult}</div>
