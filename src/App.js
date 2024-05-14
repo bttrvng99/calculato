@@ -129,9 +129,8 @@ const buttonList = [
 
 function App() {
   var [originalNumber, setOriginalNumber] = useState(0);
-  var [fullEquation, setEquation] = useState("");
+  var [fullEquation, setFullEquation] = useState("");
   var [inputNumber, setInputNumber] = useState("0");
-  var insertedNumber = 0;
   var [inputExpression, setInputExpression] = useState("");
 
   return (
@@ -153,11 +152,11 @@ function App() {
                 inputExpression={inputExpression}
                 inputNumber={inputNumber}
                 originalNumber={originalNumber}
-                setInputExpression={setInputExpression}
-                setInputNumber={setInputNumber}
-                setOriginalNumber={setOriginalNumber}
                 fullEquation={fullEquation}
-                setEquation={setEquation}
+                onChangeInputExpression={setInputExpression}
+                onChangeInputNumber={setInputNumber}
+                onChangeOriginalNumber={setOriginalNumber}
+                onChangeFullEquation={setFullEquation}
                 key={button.id}
               ></Button>
             );

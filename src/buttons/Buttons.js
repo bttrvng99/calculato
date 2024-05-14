@@ -1,66 +1,63 @@
 import "./Buttons.css";
-import { useState } from "react";
 
 var final = false;
 
-export default function Button({ 
-    text,
-     type,
-     inputNumber,
-     setInputNumber,
-     inputExpression,
-     setInputExpression,
-     originalNumber, 
-     setOriginalNumber,
-     fullEquation,
-     setEquation
-    }) {
-        var insertedNumber = 0;
+export default function Button({
+  text,
+  type,
+  inputNumber,
+  onChangeInputNumber,
+  inputExpression,
+  onChangeInputExpression,
+  originalNumber,
+  onChangeOriginalNumber,
+  fullEquation,
+  onChangeFullEquation,
+}) {
+  var insertedNumber = 0;
 
   const enterNumber = (number) => {
-    // debugger;
     if (inputNumber === "0" || final) {
       inputNumber = number.toString();
       final = false;
     } else inputNumber += number.toString();
-    setInputNumber(inputNumber);
+    onChangeInputNumber(inputNumber);
   };
 
   const enterOperand = (operand) => {
-    debugger;
-    setInputExpression(operand);
+    onChangeInputExpression(operand);
     console.log(inputExpression);
     insertedNumber = Number(inputNumber);
     if (originalNumber === 0 || inputExpression === "") {
-      setOriginalNumber(insertedNumber);
-      setInputNumber("0");
+      onChangeOriginalNumber(insertedNumber);
+      onChangeInputNumber("0");
     } else {
-      setOriginalNumber(
+      onChangeOriginalNumber(
         calculate(inputExpression, originalNumber, insertedNumber)
       );
-      setInputNumber("0");
+      onChangeInputNumber("0");
     }
   };
 
   const enterPrefix = () => {
-    if (inputNumber !== "0") setInputNumber(0 - Number(inputNumber));
+    if (inputNumber !== "0") onChangeInputNumber(0 - Number(inputNumber));
   };
 
   const clickEqual = () => {
     insertedNumber = Number(inputNumber);
     if (inputExpression.length === 0 || originalNumber === 0) {
-      setInputNumber(insertedNumber);
+      onChangeInputNumber(insertedNumber);
     } else {
-      setInputNumber(
+      onChangeInputNumber(
         calculate(inputExpression, originalNumber, insertedNumber)
       );
     }
     // var ogNumber = originalNumber;
     // var ogExpression = inputExpression;
     // var ogNumber2 = insertedNumber;
-    setInputExpression("");
-    setOriginalNumber("0");
-    setEquation(
+    onChangeInputExpression("");
+    onChangeOriginalNumber("0");
+    onChangeFullEquation(
       inputExpression.length > 0
         ? originalNumber + " " + inputExpression + " " + insertedNumber + " ="
         : insertedNumber + " ="
@@ -70,22 +67,22 @@ export default function Button({
 
   const backspace = () => {
     if (inputNumber.length > 1)
-      setInputNumber(inputNumber.slice(0, inputNumber.length - 1));
-    else setInputNumber("0");
+      onChangeInputNumber(inputNumber.slice(0, inputNumber.length - 1));
+    else onChangeInputNumber("0");
   };
 
   const clear = (input) => {
     switch (input) {
       case "C":
-        setOriginalNumber(0);
+        onChangeOriginalNumber(0);
         insertedNumber = 0;
-        setInputExpression("");
-        setEquation("");
-        setInputNumber("0");
+        onChangeInputExpression("");
+        onChangeFullEquation("");
+        onChangeInputNumber("0");
         final = false;
         break;
       case "CE":
-        setInputNumber("0");
+        onChangeInputNumber("0");
         break;
       default:
         break;
@@ -107,8 +104,8 @@ export default function Button({
         enterPrefix();
         break;
       case "decimal":
-        if (!inputNumber.includes(".")) inputNumber += ".";
-        setInputNumber(inputNumber);
+        if (!inputNumber.toString().includes(".")) inputNumber += ".";
+        onChangeInputNumber(inputNumber);
         break;
       case "backspace":
         backspace();
@@ -121,7 +118,7 @@ export default function Button({
     }
   };
 
-  console.log('render')
+  console.log("render");
   return <button onClick={() => clickButton(text, type)}>{text}</button>;
 }
 
