@@ -3,6 +3,7 @@ import { useState } from "react";
 
 function App() {
   var [originalNumber, setOriginalNumber] = useState(0);
+  var [fullEquation, setEquation] = useState("");
   var [viewResult, setViewResult] = useState("0");
   var insertedNumber = 0;
   var [inputExpression, setInputExpression] = useState("");
@@ -51,8 +52,8 @@ function App() {
   };
 
   const backspace = () => {
-    // console.log(viewResult.length());
-    setViewResult(viewResult.slice(viewResult.length() - 1, 1));
+    if(viewResult.length > 1) setViewResult(viewResult.slice(0, viewResult.length - 1));
+    else setViewResult('0');
   };
 
   return (
@@ -78,9 +79,10 @@ function App() {
           <button
             className="numpad--clear"
             onClick={() => {
-              originalNumber = 0;
+              setOriginalNumber(0);
               insertedNumber = 0;
-              viewResult = "0";
+              // viewResult = "0";
+              setInputExpression('');
               setViewResult("0");
             }}
           >
@@ -137,10 +139,7 @@ function App() {
           <button className="numpad--prefix" onClick={() => enterPrefix()}>
             +/-
           </button>
-          <button
-            className="numpad--zero"
-            onClick={() => enterNumber(0)}
-          >
+          <button className="numpad--zero" onClick={() => enterNumber(0)}>
             0
           </button>
           <button
