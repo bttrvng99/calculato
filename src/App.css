@@ -37,16 +37,18 @@
   }
 }
 
-body {
+html,body {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100%;
 }
 
 .screen {
   font-weight: bolder;
   font-size: xx-large;
+  text-align: right;
 }
 
 .screen--original {

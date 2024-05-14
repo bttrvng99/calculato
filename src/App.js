@@ -1,19 +1,20 @@
 import "./App.css";
 import { useState } from "react";
 
+var final = false;
+
 function App() {
   var [originalNumber, setOriginalNumber] = useState(0);
   var [fullEquation, setEquation] = useState("");
   var [viewResult, setViewResult] = useState("0");
   var insertedNumber = 0;
   var [inputExpression, setInputExpression] = useState("");
-  var finalInput = false;
 
   const enterNumber = (number) => {
-    console.log(viewResult);
-    if (viewResult === "0" || finalInput) {
+    // debugger;
+    if (viewResult === "0" || final) {
       viewResult = number.toString();
-      finalInput = !finalInput;
+      final = false;
     } else viewResult += number.toString();
     setViewResult(viewResult);
   };
@@ -39,16 +40,17 @@ function App() {
   const clickEqual = () => {
     insertedNumber = Number(viewResult);
     if (inputExpression.length === 0 || originalNumber === 0) {
-      setOriginalNumber(insertedNumber);
-      setViewResult("0");
+      setViewResult(insertedNumber);
+      // setViewResult("0");
     } else {
-      setOriginalNumber(
+      setViewResult(
         calculate(inputExpression, originalNumber, insertedNumber)
       );
-      setViewResult("0");
+      // setViewResult("0");
     }
-    finalInput = true;
     setInputExpression("");
+    setOriginalNumber("0");
+    final = true;
   };
 
   const backspace = () => {
