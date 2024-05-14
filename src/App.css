@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen {
+  font-weight: bolder;
+  font-size: xx-large;
+}
+
+.screen--original {
+  font-weight: normal;
+  font-size: small;
+}
+
+.numpad {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 5px;
+}
+
+.numpad--equal {
+  background-color: red;
+  color: pink;
+}
+
+.numpad--equal:active {
+  background-color: darkred;
+}
+
+button {
+  border: 0 solid black;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: gray;
+  color: white;
+  font-weight: bold;
+}
+
+button:active {
+  background-color: rgb(25, 25, 25);
+}
