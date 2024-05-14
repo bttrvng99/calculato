@@ -6,57 +6,57 @@ var final = false;
 function App() {
   var [originalNumber, setOriginalNumber] = useState(0);
   var [fullEquation, setEquation] = useState("");
-  var [viewResult, setViewResult] = useState("0");
+  var [inputNumber, setInputNumber] = useState("0");
   var insertedNumber = 0;
   var [inputExpression, setInputExpression] = useState("");
 
   const enterNumber = (number) => {
     // debugger;
-    if (viewResult === "0" || final) {
-      viewResult = number.toString();
+    if (inputNumber === "0" || final) {
+      inputNumber = number.toString();
       final = false;
-    } else viewResult += number.toString();
-    setViewResult(viewResult);
+    } else inputNumber += number.toString();
+    setInputNumber(inputNumber);
   };
 
   const enterOperand = (operand) => {
     setInputExpression(operand);
-    insertedNumber = Number(viewResult);
+    insertedNumber = Number(inputNumber);
     if (originalNumber === 0 || inputExpression === "") {
       setOriginalNumber(insertedNumber);
-      setViewResult("0");
+      setInputNumber("0");
     } else {
       setOriginalNumber(
         calculate(inputExpression, originalNumber, insertedNumber)
       );
-      setViewResult("0");
+      setInputNumber("0");
     }
   };
 
   const enterPrefix = () => {
-    if (viewResult !== "0") setViewResult(0 - Number(viewResult));
+    if (inputNumber !== "0") setInputNumber(0 - Number(inputNumber));
   };
 
   const clickEqual = () => {
-    insertedNumber = Number(viewResult);
+    insertedNumber = Number(inputNumber);
     if (inputExpression.length === 0 || originalNumber === 0) {
-      setViewResult(insertedNumber);
+      setInputNumber(insertedNumber);
     } else {
-      setViewResult(calculate(inputExpression, originalNumber, insertedNumber));
+      setInputNumber(calculate(inputExpression, originalNumber, insertedNumber));
     }
     var ogNumber = originalNumber;
     var ogExpression = inputExpression;
     var ogNumber2 = insertedNumber;
     setInputExpression("");
     setOriginalNumber("0");
-    setEquation(ogNumber + " " + ogExpression + " " + ogNumber2 + " =");
+    setEquation(ogExpression.length > 0 ? ogNumber + " " + ogExpression + " " + ogNumber2 + " =" : ogNumber2 + " =");
     final = true;
   };
 
   const backspace = () => {
-    if (viewResult.length > 1)
-      setViewResult(viewResult.slice(0, viewResult.length - 1));
-    else setViewResult("0");
+    if (inputNumber.length > 1)
+      setInputNumber(inputNumber.slice(0, inputNumber.length - 1));
+    else setInputNumber("0");
   };
 
   const clear = (input) => {
@@ -66,10 +66,11 @@ function App() {
         insertedNumber = 0;
         setInputExpression("");
         setEquation("")
-        setViewResult("0");
+        setInputNumber("0");
+        final = false;
         break;
       case "CE":
-        setViewResult("0");
+        setInputNumber("0");
         break;
       default:
         break;
@@ -82,9 +83,9 @@ function App() {
         <div className="screen">
           <div className="screen--original">
             {final && inputExpression === "" ? fullEquation : originalNumber}
-            {inputExpression}
+            {" " + inputExpression}
           </div>
-          <div className="screen--inserted">{viewResult}</div>
+          <div className="screen--inserted">{inputNumber}</div>
         </div>
         <div className="numpad">
           <button className="numpad--percentage">%</button>
@@ -151,8 +152,8 @@ function App() {
           <button
             className="numpad--decimal"
             onClick={() => {
-              if (!viewResult.includes(".")) viewResult += ".";
-              setViewResult(viewResult);
+              if (!inputNumber.includes(".")) inputNumber += ".";
+              setInputNumber(inputNumber);
             }}
           >
             .
@@ -167,29 +168,29 @@ function App() {
 }
 
 function calculate(inputExpression, originalNumber, insertedNumber) {
-  var orgNumber = originalNumber;
+  var ogNumber = originalNumber;
   switch (inputExpression) {
     case "+": {
-      orgNumber += insertedNumber;
+      ogNumber += insertedNumber;
       break;
     }
     case "-": {
-      orgNumber -= insertedNumber;
+      ogNumber -= insertedNumber;
       break;
     }
     case "*": {
-      orgNumber *= insertedNumber;
+      ogNumber *= insertedNumber;
       break;
     }
     case "/": {
-      orgNumber /= insertedNumber;
+      ogNumber /= insertedNumber;
       break;
     }
     default: {
       break;
     }
   }
-  return orgNumber;
+  return ogNumber;
 }
 
 export default App;
